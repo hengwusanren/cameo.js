@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>some widgets (eg. charts)</title>
+    <link type="text/css" rel="stylesheet" href="css/base.css">
+    <link type="text/css" rel="stylesheet" href="css/widgets.css">
+    <!--<script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery.cookie/jquery.cookie.js"></script>-->
+    <!--<script type="text/javascript" src="js/lib/requirejs/require.js" defer async="true" ></script>-->
+    <script type="text/javascript" src="js/lib/fastclick/lib/fastclick.js"></script>
+    <script type="text/javascript" src="js/lib/Chart.js/Chart.min.js"></script>
+    <script type="text/javascript" src="js/fakedata/sample.js"></script>
+    <script>
+        window.onload = function() {
+            // fastclick:
+            if ('addEventListener' in document) {
+                document.addEventListener('DOMContentLoaded', function() {
+                    FastClick.attach(document.body);
+                }, false);
+            }
+
+            // charts:
+            window.myBar = new Chart(document.getElementById("canvas_bar").getContext("2d")).Bar(barChartData, {
+                responsive: true
+            });
+            window.myLine = new Chart(document.getElementById("canvas_line").getContext("2d")).Line(lineChartData, {
+                responsive: true
+            });
+            window.myPie = new Chart(document.getElementById("canvas_pie").getContext("2d")).Pie(pieData, {
+                responsive: true
+            });
+            window.myPolarArea = new Chart(document.getElementById("canvas_polar").getContext("2d")).PolarArea(polarData, {
+                responsive: true
+            });
+            window.myRadar = new Chart(document.getElementById("canvas_radar").getContext("2d")).Radar(radarChartData, {
+                responsive: true
+            });
+        }
+    </script>
+</head>
+<body>
+<header>title</header>
+<div id="container">
+    <div class="cardlist">
+        <div>
+            <div class="card-wrapper">
+                <canvas id="canvas_bar" height="450" width="450"></canvas>
+            </div>
+        </div>
+        <div>
+            <div class="card-wrapper">
+                <canvas id="canvas_line" height="450" width="450"></canvas>
+            </div>
+        </div>
+        <div>
+            <div class="card-wrapper">
+                <canvas id="canvas_pie" height="450" width="450"></canvas>
+            </div>
+        </div>
+        <div>
+            <div class="card-wrapper">
+                <canvas id="canvas_polar" height="450" width="450"></canvas>
+            </div>
+        </div>
+        <div>
+            <div class="card-wrapper">
+                <canvas id="canvas_radar" height="450" width="450"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <nav>
+        <ul>
+            <li>tab1</li>
+            <li>tab2</li>
+            <li>tab3</li>
+            <li>tab4</li>
+        </ul>
+    </nav>
+</footer>
+</body>
+</html>

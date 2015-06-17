@@ -1,0 +1,58 @@
+/* ??? */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+body, button, input, select, textarea { font:12px/1.5 tahoma, arial, \5b8b\4f53; }
+h1, h2, h3, h4, h5, h6{ font-size:100%; }
+address, cite, dfn, em, var { font-style:normal; }
+code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+small{ font-size:12px; }
+ul, ol { list-style:none; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+sup { vertical-align:text-top; }
+sub{ vertical-align:text-bottom; }
+legend { color:#000; }
+fieldset, img { border:0; }
+button, input, select, textarea { font-size:100%; }
+table { border-collapse:collapse; border-spacing:0; }
+
+/* ??? */
+body {
+    margin: 32px 0;
+}
+
+header, footer {
+    position: fixed;
+    left: 0;
+    height: 32px;
+    width: 100%;
+    line-height: 32px;
+    font-size: 16px;
+    text-align: center;
+    background-color: white;
+    opacity: 0.8;
+}
+
+header {
+    top: 0;
+    border-bottom: 1px darkgrey solid;
+}
+
+footer {
+    bottom: 0;
+    border-top: 1px darkgrey solid;
+}
+
+footer * {
+    list-style: none;
+}
+footer ul {
+    padding: 0;
+}
+footer ul li {
+    display: inline-block;
+    width: 20%;
+}
+
+#container {
+    /* padding: 8px 0; */
+}

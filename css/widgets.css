@@ -1,0 +1,11 @@
+.cardlist {
+
+}
+.cardlist>div {
+    border-bottom: 1px lightgray solid;
+    padding: 32px;
+}
+.cardlist .card-wrapper {
+    width: 80%;
+    margin: auto;
+}
