@@ -1,0 +1,49 @@
+@import "reset";
+
+/* ?? */
+$headerHeight: 32px;
+$footerHeight: 32px;
+$basicForeColor: #000;
+$basicBackColor: #fff;
+$basicLineColor: darkgrey;
+$basicLineStyle: 1px $basicLineColor solid;
+
+/* ??? */
+body {
+  margin: $headerHeight 0 $footerHeight 0;
+}
+
+a {
+  color: $basicForeColor;
+}
+
+header, footer {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  font-size: 1em;
+  text-align: center;
+  background-color: $basicBackColor;
+  opacity: 0.8;
+}
+header {
+  top: 0;
+  height: $headerHeight;
+  line-height: $headerHeight;
+  border-bottom: $basicLineStyle;
+}
+footer {
+  bottom: 0;
+  height: $footerHeight;
+  line-height: $footerHeight;
+  border-top: $basicLineStyle;
+}
+footer * {
+  list-style: none;
+}
+
+#container {
+  /* padding: 8px 0; */
+}
+
+@import "controls";

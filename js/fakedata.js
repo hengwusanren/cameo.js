@@ -1,6 +1,6 @@
 /**
  * Created by v-kshe on 6/17/2015.
- * ??????
+ * ?????
  */
 
 var randomScalingFactor = function() { return Math.round(Math.random()*100)};

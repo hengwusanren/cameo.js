@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>some widgets (eg. charts)</title>
-    <link type="text/css" rel="stylesheet" href="css/base.css">
-    <link type="text/css" rel="stylesheet" href="css/widgets.css">
+    <link type="text/css" rel="stylesheet" href="css/frame.css">
     <!--<script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>-->
     <!--<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery.cookie/jquery.cookie.js"></script>-->
     <!--<script type="text/javascript" src="js/lib/requirejs/require.js" defer async="true" ></script>-->
-    <script type="text/javascript" src="js/lib/fastclick/lib/fastclick.js"></script>
+    <script type="text/javascript" src="js/lib/fastclick/fastclick.js"></script>
     <script type="text/javascript" src="js/lib/Chart.js/Chart.min.js"></script>
-    <script type="text/javascript" src="js/fakedata/sample.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/fakedata.js"></script>
     <script>
         window.onload = function() {
             // fastclick:
@@ -37,6 +37,11 @@
             window.myRadar = new Chart(document.getElementById("canvas_radar").getContext("2d")).Radar(radarChartData, {
                 responsive: true
             });
+
+            // events:
+            $('#tab1').onclick = function() {
+                alert('Hi!');
+            }
         }
     </script>
 </head>
@@ -72,14 +77,14 @@
     </div>
 </div>
 <footer>
-    <nav>
+    <div class="bottomTab">
         <ul>
-            <li>tab1</li>
-            <li>tab2</li>
-            <li>tab3</li>
-            <li>tab4</li>
+            <li><a id="tab1" class="tabItem" href="javascript:void(0)">tab1</a></li>
+            <li><a id="tab2" class="tabItem" href="javascript:void(0)">tab2</a></li>
+            <li><a id="tab3" class="tabItem" href="javascript:void(0)">tab3</a></li>
+            <li><a id="tab4" class="tabItem" href="javascript:void(0)">tab4</a></li>
         </ul>
-    </nav>
+    </div>
 </footer>
 </body>
 </html>
