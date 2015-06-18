@@ -41,6 +41,9 @@ function getElement(by, from) {
 /**
  * ??????
  * ??? tag, #id, .class ?? tag.class, .class1.class2
+ * @param sels
+ * @param parent
+ * @returns {*}
  */
 function $(sels, parent) {
     if(parent) parent = document;
@@ -51,4 +54,15 @@ function $(sels, parent) {
         parent = getElement(s, parent);
     }
     return parent;
+}
+
+/**
+ * ?????????????
+ * @param e
+ */
+function editStyle(e) {
+    var newStyle = prompt('input css styles', e.getAttribute('style'));
+    if (newStyle != null && newStyle != '') {
+        e.setAttribute('style', newStyle);
+    }
 }

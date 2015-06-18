@@ -51,4 +51,9 @@ $bottomTabCount: 4;
 
 .dialog {
   z-index: 100;
+  display: none;
+}
+
+.drawer {
+  z-index: 200;
 }

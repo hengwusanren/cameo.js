@@ -11,6 +11,7 @@
     <script type="text/javascript" src="js/lib/fastclick/fastclick.js"></script>
     <script type="text/javascript" src="js/lib/Chart.js/Chart.min.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/controls.js"></script>
     <script type="text/javascript" src="js/fakedata.js"></script>
     <script>
         window.onload = function() {
@@ -40,7 +41,7 @@
 
             // events:
             $('#tab1').onclick = function() {
-                alert('Hi!');
+                (new Dialog()).render();
             }
         }
     </script>
