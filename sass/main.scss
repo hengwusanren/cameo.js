@@ -1,6 +1,6 @@
 @import "reset";
 
-/* ?? */
+/* global variables */
 $headerHeight: 32px;
 $footerHeight: 32px;
 $basicForeColor: #000;
@@ -8,7 +8,7 @@ $basicBackColor: #fff;
 $basicLineColor: darkgrey;
 $basicLineStyle: 1px $basicLineColor solid;
 
-/* ??? */
+/* mandatory elements */
 body {
   margin: $headerHeight 0 $footerHeight 0;
 }

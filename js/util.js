@@ -39,8 +39,8 @@ function getElement(by, from) {
 }
 
 /**
- * ??????
- * ??? tag, #id, .class ?? tag.class, .class1.class2
+ * a simple implementation of selector
+ * only support tag, #id, .class, and tag.class, .class1.class2 as a piece of selector
  * @param sels
  * @param parent
  * @returns {*}
@@ -57,11 +57,11 @@ function $(sels, parent) {
 }
 
 /**
- * ?????????????
+ * edit the style of element, only for test
  * @param e
  */
 function editStyle(e) {
-    var newStyle = prompt('input css styles', e.getAttribute('style'));
+    var newStyle = prompt('input css styles', e.hasAttribute('style') ? e.getAttribute('style') : 'color: orange;');
     if (newStyle != null && newStyle != '') {
         e.setAttribute('style', newStyle);
     }

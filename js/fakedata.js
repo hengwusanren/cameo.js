@@ -1,6 +1,6 @@
 /**
  * Created by v-kshe on 6/17/2015.
- * ?????
+ * some fake data for test
  */
 
 var randomScalingFactor = function() { return Math.round(Math.random()*100)};
@@ -29,7 +29,7 @@ var lineChartData = {
     labels : ["January","February","March","April","May","June","July"],
     datasets : [
         {
-            label: "My First dataset",
+            label: "我的成绩",
             fillColor : "rgba(220,220,220,0.2)",
             strokeColor : "rgba(220,220,220,1)",
             pointColor : "rgba(220,220,220,1)",
@@ -39,7 +39,7 @@ var lineChartData = {
             data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
         },
         {
-            label: "My Second dataset",
+            label: "平均成绩",
             fillColor : "rgba(151,187,205,0.2)",
             strokeColor : "rgba(151,187,205,1)",
             pointColor : "rgba(151,187,205,1)",
@@ -56,31 +56,31 @@ var pieData = [
         value: 300,
         color:"#F7464A",
         highlight: "#FF5A5E",
-        label: "Red"
+        label: "语文"
     },
     {
         value: 50,
         color: "#46BFBD",
         highlight: "#5AD3D1",
-        label: "Green"
+        label: "数学"
     },
     {
         value: 100,
         color: "#FDB45C",
         highlight: "#FFC870",
-        label: "Yellow"
+        label: "英语"
     },
     {
         value: 40,
         color: "#949FB1",
         highlight: "#A8B3C5",
-        label: "Grey"
+        label: "物理"
     },
     {
         value: 120,
         color: "#4D5360",
         highlight: "#616774",
-        label: "Dark Grey"
+        label: "化学"
     }
 ];
 
@@ -89,39 +89,39 @@ var polarData = [
         value: 300,
         color:"#F7464A",
         highlight: "#FF5A5E",
-        label: "Red"
+        label: "语文"
     },
     {
         value: 50,
         color: "#46BFBD",
         highlight: "#5AD3D1",
-        label: "Green"
+        label: "数学"
     },
     {
         value: 100,
         color: "#FDB45C",
         highlight: "#FFC870",
-        label: "Yellow"
+        label: "英语"
     },
     {
         value: 40,
         color: "#949FB1",
         highlight: "#A8B3C5",
-        label: "Grey"
+        label: "物理"
     },
     {
         value: 120,
         color: "#4D5360",
         highlight: "#616774",
-        label: "Dark Grey"
+        label: "化学"
     }
 ];
 
 var radarChartData = {
-    labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+    labels: ["语文", "数学", "英语", "物理", "化学", "政治", "历史"],
     datasets: [
         {
-            label: "My First dataset",
+            label: "我的成绩",
             fillColor: "rgba(220,220,220,0.2)",
             strokeColor: "rgba(220,220,220,1)",
             pointColor: "rgba(220,220,220,1)",
@@ -131,7 +131,7 @@ var radarChartData = {
             data: [65,59,90,81,56,55,40]
         },
         {
-            label: "My Second dataset",
+            label: "平均成绩",
             fillColor: "rgba(151,187,205,0.2)",
             strokeColor: "rgba(151,187,205,1)",
             pointColor: "rgba(151,187,205,1)",

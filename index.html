@@ -9,9 +9,10 @@
     <!--<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery.cookie/jquery.cookie.js"></script>-->
     <!--<script type="text/javascript" src="js/lib/requirejs/require.js" defer async="true" ></script>-->
     <script type="text/javascript" src="js/lib/fastclick/fastclick.js"></script>
-    <script type="text/javascript" src="js/lib/Chart.js/Chart.min.js"></script>
+    <script type="text/javascript" src="js/lib/Chart.js/Chart.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
     <script type="text/javascript" src="js/controls.js"></script>
+    <script type="text/javascript" src="js/chartEx.js"></script>
     <script type="text/javascript" src="js/fakedata.js"></script>
     <script>
         window.onload = function() {
@@ -23,26 +24,58 @@
             }
 
             // charts:
-            window.myBar = new Chart(document.getElementById("canvas_bar").getContext("2d")).Bar(barChartData, {
+            window.myBar = new ChartEx('bar', barChartData, 'canvas_bar', {
                 responsive: true
             });
-            window.myLine = new Chart(document.getElementById("canvas_line").getContext("2d")).Line(lineChartData, {
+            window.myLine = new ChartEx('line', lineChartData, 'canvas_line', {
                 responsive: true
             });
-            window.myPie = new Chart(document.getElementById("canvas_pie").getContext("2d")).Pie(pieData, {
+            window.myPie = new ChartEx('pie', pieData, 'canvas_pie', {
                 responsive: true
             });
-            window.myPolarArea = new Chart(document.getElementById("canvas_polar").getContext("2d")).PolarArea(polarData, {
+            window.myPolarArea = new ChartEx('polarArea', polarData, 'canvas_polar', {
                 responsive: true
             });
-            window.myRadar = new Chart(document.getElementById("canvas_radar").getContext("2d")).Radar(radarChartData, {
+            window.myRadar = new ChartEx('radar', radarChartData, 'canvas_radar', {
                 responsive: true
             });
 
             // events:
             $('#tab1').onclick = function() {
-                (new Dialog()).render();
-            }
+                window.myDialog = new Dialog(
+                        'normal',
+                        'this is a pop-up',
+                        '<div>As you see, this is a pop-up and can be anything.</div>',
+                        ['OK'],
+                        function() { alert('you choose OK.') }
+                );
+                window.myDialog.render();
+            };
+            $('#tab2').onclick = function() {
+                var cmdline = prompt('input a command', 'myTable.append([\'Li\', \'54\'])');
+                eval(cmdline);
+            };
+            $('#tab3').onclick = function() {
+                var target = prompt('input the id of target', 'htable');
+                editStyle(document.getElementById(target));
+            };
+
+            // test on data-presentation:
+            var myTable = new Table(
+                'htable_test',
+                'h',
+                'this is table title',
+                ['name', 'score'],
+                [
+                    ['Zhao', '87'],
+                    ['Qian', '76'],
+                    ['Sun', '65']
+                ]
+            );
+            document.getElementById('htable').appendChild(myTable.node());
+            //myTable.append(['Li', '54']);
+            //myTable.clear();
+            //myTable.destroy();
         }
     </script>
 </head>
@@ -51,8 +84,16 @@
 <div id="container">
     <div class="cardlist">
         <div>
+            <div id="htable"></div>
+        </div>
+        <div>
             <div class="card-wrapper">
                 <canvas id="canvas_bar" height="450" width="450"></canvas>
+            </div>
+        </div>
+        <div>
+            <div class="card-wrapper">
+                <canvas id="canvas_radar" height="450" width="450"></canvas>
             </div>
         </div>
         <div>
@@ -70,20 +111,15 @@
                 <canvas id="canvas_polar" height="450" width="450"></canvas>
             </div>
         </div>
-        <div>
-            <div class="card-wrapper">
-                <canvas id="canvas_radar" height="450" width="450"></canvas>
-            </div>
-        </div>
     </div>
 </div>
 <footer>
     <div class="bottomTab">
         <ul>
-            <li><a id="tab1" class="tabItem" href="javascript:void(0)">tab1</a></li>
-            <li><a id="tab2" class="tabItem" href="javascript:void(0)">tab2</a></li>
-            <li><a id="tab3" class="tabItem" href="javascript:void(0)">tab3</a></li>
-            <li><a id="tab4" class="tabItem" href="javascript:void(0)">tab4</a></li>
+            <li><a id="tab1" class="tabItem" href="javascript:void(0)">test1</a></li>
+            <li><a id="tab2" class="tabItem" href="javascript:void(0)">test2</a></li>
+            <li><a id="tab3" class="tabItem" href="javascript:void(0)">test3</a></li>
+            <li><a id="tab4" class="tabItem" href="javascript:void(0)">test4</a></li>
         </ul>
     </div>
 </footer>
