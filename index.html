@@ -11,6 +11,7 @@
     <script type="text/javascript" src="js/lib/fastclick/fastclick.js"></script>
     <script type="text/javascript" src="js/lib/Chart.js/Chart.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/test.js"></script>
     <script type="text/javascript" src="js/controls.js"></script>
     <script type="text/javascript" src="js/chartEx.js"></script>
     <script type="text/javascript" src="js/fakedata.js"></script>
@@ -24,7 +25,7 @@
             }
 
             // charts:
-            window.myBar = new ChartEx('bar', barChartData, 'canvas_bar', {
+            /*window.myBar = new ChartEx('bar', barChartData, 'canvas_bar', {
                 responsive: true
             });
             window.myLine = new ChartEx('line', lineChartData, 'canvas_line', {
@@ -38,10 +39,10 @@
             });
             window.myRadar = new ChartEx('radar', radarChartData, 'canvas_radar', {
                 responsive: true
-            });
+            });*/
 
             // events:
-            $('#tab1').onclick = function() {
+            Util.Select('#tab1').onclick = function() {
                 window.myDialog = new Dialog(
                         'normal',
                         'this is a pop-up',
@@ -51,13 +52,19 @@
                 );
                 window.myDialog.render();
             };
-            $('#tab2').onclick = function() {
+            Util.Select('#tab2').onclick = function() {
                 var cmdline = prompt('input a command', 'myTable.append([\'Li\', \'54\'])');
                 eval(cmdline);
             };
-            $('#tab3').onclick = function() {
+            Util.Select('#tab3').onclick = function() {
                 var target = prompt('input the id of target', 'htable');
-                editStyle(document.getElementById(target));
+                if(target != null && target != '') {
+                    Test.EditStyle(Util.Select('#' + target));
+                }
+            };
+            Util.Select('#tab4').onclick = function() {
+                window.myDrawer = new Drawer();
+                window.myDrawer.render();
             };
 
             // test on data-presentation:
@@ -72,7 +79,7 @@
                     ['Sun', '65']
                 ]
             );
-            document.getElementById('htable').appendChild(myTable.node());
+            Util.Select('#htable').appendChild(myTable.node());
             //myTable.append(['Li', '54']);
             //myTable.clear();
             //myTable.destroy();

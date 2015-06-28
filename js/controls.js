@@ -20,7 +20,7 @@ var Class = {
  * 消息队列
  * @type {Array}
  */
-var messageQueue = [];
+var MessageQueue = [];
 
 /**
  * Dialog 类
@@ -36,45 +36,54 @@ Dialog.prototype = {
         this.choices = choices || ['CANCEL', 'OK'];
         this.callback = callback || function () {};
     },
-    render: function () { // 成员函数
-        var dialogDom = this.getDialog(this.id, this.content, this.style);
+    render: function () { // 成员函数，渲染显示
+        var dialogDom = this.getDialog(this.id);
         document.body.appendChild(dialogDom);
         document.body.appendChild(GetOverlay(this.overlayId));
-
         document.body.style.overflow = 'hidden';
         dialogDom.style.display = 'block';
     },
-    getDialog: function (timestamp, content, style) {
+    getDialog: function (timestamp) { // 返回构造的节点
         var dlg = document.getElementById(timestamp);
         if (dlg) document.body.removeChild(dlg);
         dlg = document.createElement('div');
         dlg.id = timestamp;
-        dlg.setAttribute('class', 'dialog');
-        dlg.innerHTML = '<div style="position: relative; left: -50%; top: -50%;">'
-            + content
-
-            + '<div style="text-align: center; height: 32px; line-height: 32px;">' +
-            this.getChoiseString() + '</div>'
-
-            + '</div>';
-        dlg.setAttribute('style', style);
+        dlg.className = 'dialog';
+        dlg.innerHTML = this.getDialogHTML();
         (function () {
             dlg.onclick = function () {
                 document.body.removeChild(this);
                 if (document.getElementById(timestamp + '_dialog')) document.body.removeChild(document.getElementById(timestamp + '_dialog'));
                 document.body.style.overflow = 'auto';
-            }
+            };
         })();
         return dlg;
     },
-    getChoiseString: function() {
-        if(this.choices.length == 1) {
-            return '<div class="single">' + this.choices[0] + '</div>';
+    getDialogHTML: function() { // dialog HTML 模板
+        return '<div style="position: relative; left: -50%; top: -50%;">'
+            + this.content
+            + this.getChoiceHTML()
+            + '</div>';
+    },
+    getChoiceHTML: function() { // choice HTML 模板
+        var choiceNum = this.choices.length;
+        if(choiceNum != 1 && choiceNum != 2) return '';
+        var choiceStr = '<div style="text-align: center; height: 32px; line-height: 32px;">';
+        if(choiceNum == 1) {
+            choiceStr += '<div class="single">'
+                + this.choices[0]
+                + '</div>'
+                + '</div>';
+        } else if(choiceNum == 2) {
+            choiceStr += '<div class="cancel">'
+                + this.choices[0]
+                + '</div>'
+                + '<div class="ok">'
+                + this.choices[1]
+                + '</div>'
+                + '</div>';
         }
-        if(this.choices.length == 2) {
-            return '<div class="cancel">' + this.choices[0] + '</div>' + '<div class="ok">' + this.choices[1] + '</div>';
-        }
-        return '';
+        return choiceStr;
     }
 };
 
@@ -83,22 +92,23 @@ Dialog.prototype = {
  */
 var Drawer = Class.create();
 Drawer.prototype = {
-    initialize: function (menus) { // 构造函数
+    initialize: function (menus, type) { // 构造函数
         this.id = (new Date().getTime()).toString(); // 时间戳
         this.overlayId = this.id + '_drawer'; // 遮罩层的 id 由宿主元素的时间戳和类型构成
+        this.type = type;
         this.menus = menus || [
                 {
-                    name: 'menuItem1',
+                    name: 'item1',
                     type: 'normal',
-                    style: '',
+                    content: '',
                     callback: function () {
                         history.go(0)
                     }
                 },
                 {
-                    name: 'menuItem2',
+                    name: 'item2',
                     type: 'warning',
-                    style: '',
+                    content: '',
                     callback: function () {
                         history.go(-1)
                     }
@@ -106,29 +116,57 @@ Drawer.prototype = {
             ];
     },
     render: function () { // 成员函数
-        var drawerDom = this.getDrawer(this.id, this.content, this.style);
+        var drawerDom = this.getDrawer(this.id);
         document.body.appendChild(drawerDom);
         document.body.appendChild(GetOverlay(this.overlayId));
 
         document.body.style.overflow = 'hidden';
         drawerDom.style.display = 'block';
     },
-    getDrawer: function (timestamp, content, style) {
+    getDrawer: function (timestamp) {
         var drw = document.getElementById(timestamp);
         if (drw) document.body.removeChild(drw);
         drw = document.createElement('div');
         drw.id = timestamp;
-        drw.setAttribute('class', 'drawer');
-        drw.innerHTML = content;
-        drw.setAttribute('style', style);
-        (function () {
-            drw.onclick = function () {
-                document.body.removeChild(this);
-                if (document.getElementById(timestamp + '_drawer')) document.body.removeChild(document.getElementById(timestamp + '_drawer'));
-                document.body.style.overflow = 'auto';
-            }
-        })();
+        drw.className = 'drawer';
+        var menuList = document.createElement('ul');
+        var itemNum = this.menus.length;
+        for(var i = 0; i < itemNum; i++) {
+            var menuItem = document.createElement('li');
+            menuItem.setAttribute('data-index', i.toString());
+            menuItem.innerHTML = (this.menus[i].content == '' ? this.menus[i].name : this.menus[i].content);
+            var callback = this.menus[i].callback;
+            (function () { // 每个菜单项点击事件
+                menuItem.onclick = function () {
+                    callback();
+                    var drwNode = this.parentNode;
+                    while(drwNode.className != 'drawer') {
+                        drwNode = drwNode.parentNode;
+                        if(drwNode == document.body) return;
+                    }
+                    document.body.removeChild(drwNode);
+                    if (document.getElementById(drwNode.id + '_drawer')) document.body.removeChild(document.getElementById(drwNode.id + '_drawer'));
+                    document.body.style.overflow = 'auto';
+                };
+            })();
+            menuList.appendChild(menuItem);
+        }
+        drw.appendChild(menuList);
         return drw;
+    },
+    getDrawerHTML: function() { // dialog HTML 模板
+        var drawerStr = '<ul>';
+        var itemNum = this.menus.length;
+        for(var i = 0; i < itemNum; i++)
+            drawerStr += this.getItemHTML(i, this.menus[i].name, this.menus[i].type, this.menus[i].content);
+        drawerStr += '</ul>';
+        return drawerStr;
+    },
+    getItemHTML: function(index, name, type, content) { // menu-item HTML 模板
+        var itemStr = '<li data-index="' + index + '">'
+            + (content == '' ? name : content)
+            + '</li>';
+        return itemStr;
     }
 };
 
@@ -144,13 +182,13 @@ var GetOverlay = function (overlayId) {
     if (overlay) document.body.removeChild(overlay);
     overlay = document.createElement('div');
     overlay.id = overlayId;
-    overlay.setAttribute('class', 'overlay');
+    overlay.className = 'overlay';
     (function () {
         overlay.onclick = function () {
             if (document.getElementById(hostId)) document.body.removeChild(document.getElementById(hostId));
             document.body.removeChild(this);
             document.body.style.overflow = 'auto';
-        }
+        };
     })();
     return overlay;
 };
@@ -169,7 +207,7 @@ Table.prototype = {
         this.style = style || '';
         this.fieldCount = headers.length;
         this.itemCount = data.length;
-        this.context = Table.getTable(this.id, this.type, this.title, this.headers, this.data, this.style);
+        this.context = Table.CreateTable(this.id, this.type, this.title, this.headers, this.data, this.style);
     },
     node: function () { return this.context }, // 返回创建的 Dom 节点，同时也作为对象自我操作的上下文
     append: function (item) {
@@ -177,7 +215,8 @@ Table.prototype = {
 
         var newItem = this.context.insertRow(this.itemCount);
         var curField;
-        for(var i = 0; i < item.length; i++) {
+        var itemLen = item.length;
+        for(var i = 0; i < itemLen; i++) {
             curField = newItem.insertCell(i);
             curField.innerHTML = item[i];
         }
@@ -211,7 +250,7 @@ Table.prototype = {
         this.context.parentNode.removeChild(this.context);
     }
 };
-Table.getTable = function (id, type, title, headers, data, style) {
+Table.CreateTable = function (id, type, title, headers, data, style) {
     var tbl = document.createElement('table');
     tbl.id = id;
     tbl.setAttribute('width', '100%');
