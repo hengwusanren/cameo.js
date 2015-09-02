@@ -11,7 +11,6 @@
     <script type="text/javascript" src="js/lib/fastclick/fastclick.js"></script>
     <script type="text/javascript" src="js/lib/Chart.js/Chart.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
-    <script type="text/javascript" src="js/test.js"></script>
     <script type="text/javascript" src="js/controls.js"></script>
     <script type="text/javascript" src="js/chartEx.js"></script>
     <script type="text/javascript" src="js/fakedata.js"></script>
@@ -25,7 +24,8 @@
             }
 
             // charts:
-            /*window.myBar = new ChartEx('bar', barChartData, 'canvas_bar', {
+            /*
+            window.myBar = new ChartEx('bar', barChartData, 'canvas_bar', {
                 responsive: true
             });
             window.myLine = new ChartEx('line', lineChartData, 'canvas_line', {
@@ -39,10 +39,11 @@
             });
             window.myRadar = new ChartEx('radar', radarChartData, 'canvas_radar', {
                 responsive: true
-            });*/
+            });
+            */
 
             // events:
-            Util.Select('#tab1').onclick = function() {
+            $('#tab1').onclick = function() {
                 window.myDialog = new Dialog(
                         'normal',
                         'this is a pop-up',
@@ -52,23 +53,17 @@
                 );
                 window.myDialog.render();
             };
-            Util.Select('#tab2').onclick = function() {
+            $('#tab2').onclick = function() {
                 var cmdline = prompt('input a command', 'myTable.append([\'Li\', \'54\'])');
                 eval(cmdline);
             };
-            Util.Select('#tab3').onclick = function() {
+            $('#tab3').onclick = function() {
                 var target = prompt('input the id of target', 'htable');
-                if(target != null && target != '') {
-                    Test.EditStyle(Util.Select('#' + target));
-                }
-            };
-            Util.Select('#tab4').onclick = function() {
-                window.myDrawer = new Drawer();
-                window.myDrawer.render();
+                editStyle(document.getElementById(target));
             };
 
             // test on data-presentation:
-            var myTable = new Table(
+            window.myTable = new Table(
                 'htable_test',
                 'h',
                 'this is table title',
@@ -79,7 +74,7 @@
                     ['Sun', '65']
                 ]
             );
-            Util.Select('#htable').appendChild(myTable.node());
+            document.getElementById('htable').appendChild(myTable.node());
             //myTable.append(['Li', '54']);
             //myTable.clear();
             //myTable.destroy();
@@ -93,6 +88,7 @@
         <div>
             <div id="htable"></div>
         </div>
+        <!--
         <div>
             <div class="card-wrapper">
                 <canvas id="canvas_bar" height="450" width="450"></canvas>
@@ -118,6 +114,7 @@
                 <canvas id="canvas_polar" height="450" width="450"></canvas>
             </div>
         </div>
+        -->
     </div>
 </div>
 <footer>
