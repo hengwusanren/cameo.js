@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <title>some widgets (eg. charts)</title>
+    <title>some ui components</title>
     <link type="text/css" rel="stylesheet" href="css/frame.css">
     <!--<script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>-->
     <!--<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery.cookie/jquery.cookie.js"></script>-->
     <!--<script type="text/javascript" src="js/lib/requirejs/require.js" defer async="true" ></script>-->
     <script type="text/javascript" src="js/lib/fastclick/fastclick.js"></script>
-    <script type="text/javascript" src="js/lib/Chart.js/Chart.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
     <script type="text/javascript" src="js/controls.js"></script>
-    <script type="text/javascript" src="js/chartEx.js"></script>
+    <script type="text/javascript" src="js/test.js"></script>
     <script type="text/javascript" src="js/fakedata.js"></script>
     <script>
         window.onload = function() {
@@ -22,25 +21,6 @@
                     FastClick.attach(document.body);
                 }, false);
             }
-
-            // charts:
-            /*
-            window.myBar = new ChartEx('bar', barChartData, 'canvas_bar', {
-                responsive: true
-            });
-            window.myLine = new ChartEx('line', lineChartData, 'canvas_line', {
-                responsive: true
-            });
-            window.myPie = new ChartEx('pie', pieData, 'canvas_pie', {
-                responsive: true
-            });
-            window.myPolarArea = new ChartEx('polarArea', polarData, 'canvas_polar', {
-                responsive: true
-            });
-            window.myRadar = new ChartEx('radar', radarChartData, 'canvas_radar', {
-                responsive: true
-            });
-            */
 
             // events:
             $('#tab1').onclick = function() {
@@ -59,7 +39,7 @@
             };
             $('#tab3').onclick = function() {
                 var target = prompt('input the id of target', 'htable');
-                editStyle(document.getElementById(target));
+                Test.editStyle(document.getElementById(target));
             };
 
             // test on data-presentation:
@@ -88,33 +68,6 @@
         <div>
             <div id="htable"></div>
         </div>
-        <!--
-        <div>
-            <div class="card-wrapper">
-                <canvas id="canvas_bar" height="450" width="450"></canvas>
-            </div>
-        </div>
-        <div>
-            <div class="card-wrapper">
-                <canvas id="canvas_radar" height="450" width="450"></canvas>
-            </div>
-        </div>
-        <div>
-            <div class="card-wrapper">
-                <canvas id="canvas_line" height="450" width="450"></canvas>
-            </div>
-        </div>
-        <div>
-            <div class="card-wrapper">
-                <canvas id="canvas_pie" height="450" width="450"></canvas>
-            </div>
-        </div>
-        <div>
-            <div class="card-wrapper">
-                <canvas id="canvas_polar" height="450" width="450"></canvas>
-            </div>
-        </div>
-        -->
     </div>
 </div>
 <footer>

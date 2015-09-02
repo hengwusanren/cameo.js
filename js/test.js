@@ -8,7 +8,8 @@ var Test = function () {
          * edit the style of element
          * @param e
          */
-        EditStyle: function (e) {
+        editStyle: function (e) {
+            if(!e) return;
             var newStyle = prompt('input css styles', e.hasAttribute('style') ? e.getAttribute('style') : 'color: orange;');
             if (newStyle != null && newStyle != '') {
                 e.setAttribute('style', newStyle);
