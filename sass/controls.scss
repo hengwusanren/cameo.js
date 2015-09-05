@@ -55,10 +55,12 @@ $bottomTabCount: 4;
 /* dialog */
 .dialog {
   z-index: 100;
-  display: none;
+  /*display: none;*/
+  visibility: hidden;
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 80%;
   .cancel, .ok {
     width: 50%;
     border-radius: 4px;

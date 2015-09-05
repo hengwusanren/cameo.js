@@ -27,8 +27,8 @@
                 window.myDialog = new Dialog(
                         'normal',
                         'this is a pop-up',
-                        '<div>As you see, this is a pop-up and can be anything.</div>',
-                        ['OK'],
+                        '<div>As you see, <br>this is a pop-up and can be anything.</div>',
+                        ['Cancel', 'OK'],
                         function() { alert('you choose OK.') }
                 );
                 window.myDialog.render();

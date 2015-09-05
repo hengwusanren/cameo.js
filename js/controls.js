@@ -39,10 +39,11 @@ Dialog.prototype = {
     render: function() { // 成员函数
         var dialogDom = this.getDialog(this.id, this.content, this.style);
         document.body.appendChild(dialogDom);
+        this.setDialogOffset(dialogDom);
         document.body.appendChild(GetOverlay(this.overlayId));
 
         document.body.style.overflow = 'hidden';
-        dialogDom.style.display = 'block';
+        dialogDom.style.visibility = 'visible';
     },
     getDialog: function(timestamp, content, style) {
         var dlg = document.getElementById(timestamp);
@@ -52,7 +53,7 @@ Dialog.prototype = {
         dlg.setAttribute('class', 'dialog');
         dlg.innerHTML = '<div style="position: relative; left: -50%; top: -50%;">' + content
 
-            + '<div style="text-align: center; height: 32px; line-height: 32px;">' +
+            + '<div style="text-align: center; height: 42px; line-height: 32px;">' +
             this.getChoiseString() + '</div>'
 
         + '</div>';
@@ -65,6 +66,11 @@ Dialog.prototype = {
             }
         })();
         return dlg;
+    },
+    setDialogOffset: function(dialogDom) {
+        var content = dialogDom.childNodes[0];
+        dialogDom.style.width = content.offsetWidth + 'px';
+        dialogDom.style.height = content.offsetHeight + 'px';
     },
     getChoiseString: function() {
         if (this.choices.length == 1) {
