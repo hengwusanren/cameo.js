@@ -24,14 +24,15 @@
 
             // events:
             $('#tab1').onclick = function() {
-                window.myDialog = new Dialog(
-                        'normal',
-                        'this is a pop-up',
-                        '<div>As you see, <br>this is a pop-up and can be anything.</div>',
-                        ['Cancel', 'OK'],
-                        function() { alert('you choose OK.') }
-                );
-                window.myDialog.render();
+                window.myDialog = new Dialog({
+                    type: 'normal',
+                    title: 'a pop-up dialog',
+                    content: '<div>输入密码：</div><div><input type="password" name="password"></div>',
+                    choices: ['确认', '取消'],
+                    yes: function () {},
+                    no: function () {},
+                    success: function(dlg){}
+                });
             };
             $('#tab2').onclick = function() {
                 var cmdline = prompt('input a command', 'myTable.append([\'Li\', \'54\'])');

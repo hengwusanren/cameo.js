@@ -27,14 +27,17 @@ var messageQueue = [];
  */
 var Dialog = Class.create();
 Dialog.prototype = {
-    initialize: function(type, title, content, choices, callback) { // 构造函数
+    initialize: function(options) { // 构造函数
         this.id = (new Date().getTime()).toString(); // 时间戳
         this.overlayId = this.id + '_dialog'; // 遮罩层的 id 由宿主元素的时间戳和类型构成
-        this.type = type || 'warning';
-        this.title = title || 'dialog';
-        this.content = content || '';
-        this.choices = choices || ['CANCEL', 'OK'];
-        this.callback = callback || function() {};
+        this.type = options.type || 'warning';
+        this.title = options.title || 'dialog';
+        this.content = options.content || '';
+        this.choices = options.choices || ['OK', 'Cancel'];
+        this.okCallback = options.yes || function() {};
+        this.cancelCallback = options.no || function() {};
+        this.onSuccess = options.success || function() {};
+        this.render();
     },
     render: function() { // 成员函数
         var dialogDom = this.getDialog(this.id, this.content, this.style);
@@ -42,8 +45,33 @@ Dialog.prototype = {
         this.setDialogOffset(dialogDom);
         document.body.appendChild(GetOverlay(this.overlayId));
 
+        (function(dialogId, callback0, callback1) {
+            var thisDialog = document.getElementById(dialogId);
+            if(thisDialog.getElementsByClassName('single').length > 0) {
+                thisDialog.getElementsByClassName('single')[0].onclick = function() {
+                    Dialog.close(dialogId);
+                    callback0();
+                }
+            }
+            if(thisDialog.getElementsByClassName('ok').length > 0) {
+                thisDialog.getElementsByClassName('ok')[0].onclick = function() {
+                    Dialog.close(dialogId);
+                    callback0();
+                }
+            }
+            if(thisDialog.getElementsByClassName('cancel').length > 0) {
+                thisDialog.getElementsByClassName('cancel')[0].onclick = function() {
+                    Dialog.close(dialogId);
+                    callback1();
+                }
+            }
+        })(this.id, this.okCallback, this.cancelCallback);
+
         document.body.style.overflow = 'hidden';
+        document.getElementById(this.overlayId).style.display = 'block';
         dialogDom.style.visibility = 'visible';
+
+        this.onSuccess(dialogDom);
     },
     getDialog: function(timestamp, content, style) {
         var dlg = document.getElementById(timestamp);
@@ -51,36 +79,43 @@ Dialog.prototype = {
         dlg = document.createElement('div');
         dlg.id = timestamp;
         dlg.setAttribute('class', 'dialog');
-        dlg.innerHTML = '<div style="position: relative; left: -50%; top: -50%;">' + content
-
-            + '<div style="text-align: center; height: 42px; line-height: 32px;">' +
-            this.getChoiseString() + '</div>'
-
-        + '</div>';
+        dlg.innerHTML = '<div class="dialog-wrapper"><div class="dialog-content">'
+            + '<div class="dialog-form">' + content + '</div>'
+            + '<div class="dialog-btns">' + this.getChoiceString() + '</div>'
+            + '</div></div>';
         dlg.setAttribute('style', style);
-        (function() {
-            dlg.onclick = function() {
-                document.body.removeChild(this);
-                if (document.getElementById(timestamp + '_dialog')) document.body.removeChild(document.getElementById(timestamp + '_dialog'));
-                document.body.style.overflow = 'auto';
-            }
-        })();
         return dlg;
     },
     setDialogOffset: function(dialogDom) {
         var content = dialogDom.childNodes[0];
-        dialogDom.style.width = content.offsetWidth + 'px';
+        dialogDom.style.width = '100%';//content.offsetWidth + 'px';
         dialogDom.style.height = content.offsetHeight + 'px';
     },
-    getChoiseString: function() {
+    getChoiceString: function() {
         if (this.choices.length == 1) {
-            return '<div class="single">' + this.choices[0] + '</div>';
+            return '<div class="btn">' + this.choices[0] + '</div>';
         }
         if (this.choices.length == 2) {
-            return '<div class="cancel">' + this.choices[0] + '</div>' + '<div class="ok">' + this.choices[1] + '</div>';
+            return '<div class="btn-half cancel">' + this.choices[1] + '</div>' + '<div class="btn-half ok">' + this.choices[0] + '</div>';
         }
         return '';
     }
+};
+Dialog.close = function (dialogId) {
+    document.body.removeChild(document.getElementById(dialogId));
+    if (document.getElementById(dialogId + '_dialog')) document.body.removeChild(document.getElementById(dialogId + '_dialog'));
+    document.body.style.overflow = 'auto';
+};
+Dialog.alert = function (text) {
+    new Dialog({
+        type: 'normal',
+        title: 'a pop-up dialog',
+        content: '<p>' + text + '</p>',
+        choices: ['确认'],
+        yes: function () {},
+        no: function () {},
+        success: function(dlg){}
+    });
 };
 
 /**
@@ -140,20 +175,22 @@ Drawer.prototype = {
  * @returns {Element}
  * @constructor
  */
-var GetOverlay = function(overlayId) {
+var GetOverlay = function(overlayId, clickHide) {
     var hostId = overlayId.split('_')[0]; // 根据 overlay 的命名规则得到其宿主元素 id
     var overlay = document.getElementById(overlayId);
     if (overlay) document.body.removeChild(overlay);
     overlay = document.createElement('div');
     overlay.id = overlayId;
     overlay.setAttribute('class', 'overlay');
-    (function() {
-        overlay.onclick = function() {
-            if (document.getElementById(hostId)) document.body.removeChild(document.getElementById(hostId));
-            document.body.removeChild(this);
-            document.body.style.overflow = 'auto';
-        }
-    })();
+    if(clickHide) {
+        (function (hId) {
+            overlay.onclick = function () {
+                if (document.getElementById(hId)) document.body.removeChild(document.getElementById(hId));
+                document.body.removeChild(this);
+                document.body.style.overflow = 'auto';
+            }
+        })(hostId);
+    }
     return overlay;
 };
 

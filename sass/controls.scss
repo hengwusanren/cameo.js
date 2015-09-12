@@ -54,42 +54,70 @@ $bottomTabCount: 4;
 
 /* dialog */
 .dialog {
-  z-index: 100;
+  z-index: 1000;
   /*display: none;*/
   visibility: hidden;
   position: fixed;
   top: 50%;
   left: 50%;
   width: 80%;
-  .cancel, .ok {
-    width: 50%;
-    border-radius: 4px;
+  .btn-half {
+    display: inline-block;
+    width: 48%;
     margin-top: 8px;
+    border-radius: 4px;
     cursor: pointer;
   }
   .cancel {
-    float: left;
-    margin-right: 4px;
-    margin-left: -6px;
-    border: 1px solid gray;
-    color: gray;
+    margin-right: 2%;
+    border: 1px solid #808080;
+    color: #808080;
+    margin-left: -2px;
   }
   .ok {
-    float: right;
-    margin-left: 4px;
-    margin-right: -6px;
-    border: 1px solid orange;
-    color: orange;
+    margin-left: 2%;
+    border: 1px solid #FFA500;
+    color: #FFA500;
+    margin-right: -2px;
   }
-  .single {
+  .btn {
+    display: inline-block;
     width: 100%;
-    float: right;
-    border-radius: 4px;
     margin-top: 8px;
-    border: 1px solid orange;
-    color: orange;
+    color: #fff;
+    background-color: #0078D7;
+    border-radius: 4px;
     cursor: pointer;
   }
+}
+.dialog-form {
+  min-height: 80px;
+  max-height: 160px;
+  div {
+    line-height: 32px;
+  }
+  input {
+    width: 100%;
+  }
+}
+.dialog-wrapper {
+  position: relative;
+  left: -50%;
+  top: -50%;
+  padding: 8px 0;
+  text-align: center;
+  background-color: #fff;
+}
+.dialog-content {
+  display: inline-block;
+  min-width: 200px;
+  max-width: 400px;
+  text-align: left;
+}
+.dialog-btns {
+  text-align: center;
+  height: 40px;
+  line-height: 32px;
 }
 
 /* drawer-like menu */
